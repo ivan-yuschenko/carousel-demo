@@ -1,5 +1,10 @@
-<div>
-  <ng-container *ngFor="let item of carouselItems">
-    <app-carousel-item [item]="item"></app-carousel-item>
-  </ng-container>
+
+<div class="container">
+  <div class="carousel-wrap">
+    <div class="carousel-container" #carousel>
+      <ng-container *ngFor="let item of carouselItems; index as i;">
+        <app-carousel-item [item]="item"></app-carousel-item>
+      </ng-container>
+    </div>
+  </div>
 </div>
