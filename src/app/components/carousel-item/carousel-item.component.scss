@@ -7,13 +7,13 @@
   align-items: center;
   .item {
     width: 100vw;
+    background-size: cover;
     .inner-container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-repeat: no-repeat;
-      padding: 15px 0;
+      padding: 20px 0;
       color: $textPrimaryColor;
       .text {
         text-align: center;
