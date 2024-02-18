@@ -2,7 +2,7 @@
   <div class="item" [ngStyle]="{'background-image': 'url(' + item?.backgroundUrl + ')'}">
     <div class="inner-container">
       <img [src]="item?.logoUrl">
-      <h1>{{ item?.title }}</h1>
+      <h1 class="text">{{ item?.title }}</h1>
       <p class="text" [innerHTML]="item?.text"></p>
       <button class="button">{{ item?.actionBtnText }}</button>
     </div>
