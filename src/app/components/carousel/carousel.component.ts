@@ -23,7 +23,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   carouselItems: CarouselItem[] = [];
 
-  itemWidth = 390;
+  itemWidth = 0;
 
   currentIndex = 1;
 
@@ -37,6 +37,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.carouselService.getCarouselItems().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(val => {
+      this.itemWidth = window.innerWidth;
       const tempCarousel = val;
       tempCarousel.unshift(val[val.length-1]);
       tempCarousel.push(val[0]);
