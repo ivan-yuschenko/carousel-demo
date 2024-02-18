@@ -28,3 +28,11 @@
     }
   }
 }
+
+:host {
+  ::ng-deep {
+    .highlight {
+      color: $textSecondaryColor;
+    }
+  }
+}

@@ -2,6 +2,7 @@
 .container {
   display: flex;
   justify-content: center;
+  touch-action: none;
   .carousel-wrap {
     overflow: hidden;
     display: block;
