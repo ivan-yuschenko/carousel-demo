@@ -11,6 +11,11 @@
       width: 100%;
       display: flex;
       align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s linear 0.5s;
+      &.visible {
+        opacity: 1;
+      }
     }
   }
 }

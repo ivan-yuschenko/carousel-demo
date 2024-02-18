@@ -25,7 +25,11 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   itemWidth = 428;
 
-  currentIndex = 0;
+  currentIndex = 1;
+
+  transitionTiming = '150ms ease-in';
+
+  isLoaded = false;
 
   intervalId!: ReturnType<typeof setInterval>;
 
@@ -33,7 +37,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.carouselService.getCarouselItems().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(val => {
-      this.carouselItems = val;
+      const tempCarousel = val;
+      tempCarousel.unshift(val[val.length-1]);
+      tempCarousel.push(val[0]);
+      this.carouselItems = tempCarousel;
+      this.animateCarousel(0);
+      this.isLoaded = true;
     });
   }
 
@@ -63,32 +72,34 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   nextSlide(): void {
-    if (this.currentIndex + 1 >= this.carouselItems.length) {
-      this.currentIndex = -1;
-    };
-    const offset = (this.currentIndex + 1) * this.itemWidth;
-    const myAnimation = this.buildAnimation(offset);
-    this.animationPlayer = myAnimation.create(this.carousel.nativeElement);
-    this.animationPlayer.play();
+    if (this.currentIndex + 1 === this.carouselItems.length - 1) {
+      this.currentIndex = 0;
+      this.animateCarousel(0);
+    }
     this.currentIndex++;
+    this.animateCarousel(this.transitionTiming);
   }
 
   prevSlide(): void {
     if (this.currentIndex === 0) {
-      this.currentIndex = this.carouselItems.length;
-    };
-    this.currentIndex = ((this.currentIndex - 1) + this.carouselItems.length) % this.carouselItems.length;
-    const offset = this.currentIndex * this.itemWidth;
-    const myAnimation = this.buildAnimation(offset);
-    this.animationPlayer = myAnimation.create(this.carousel.nativeElement);
-    this.animationPlayer.play();
+      this.currentIndex = this.carouselItems.length - 2;
+      this.animateCarousel(0);
+    }
+    this.currentIndex--;
+    this.animateCarousel(this.transitionTiming);
   }
 
-
-  buildAnimation(offset: number): AnimationFactory {
+  buildAnimation(offset: number, transitionTiming: string | number = 0): AnimationFactory {
     return this.animationBuilder.build([
-      animate('150ms ease-in', style({ transform: `translateX(-${offset}px)` }))
+      animate(transitionTiming, style({ transform: `translateX(-${offset}px)` }))
     ]);
+  }
+
+  animateCarousel(transitionTiming: string | number) {
+    const offset = this.currentIndex * this.itemWidth;
+    const myAnimation: AnimationFactory = this.buildAnimation(offset, transitionTiming);
+    this.animationPlayer = myAnimation.create(this.carousel.nativeElement);
+    this.animationPlayer.play();
   }
 
   setTimer(): void {

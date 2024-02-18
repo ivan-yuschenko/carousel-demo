@@ -1,7 +1,7 @@
 
 <div class="container">
   <div class="carousel-wrap">
-    <div class="carousel-container" #carousel>
+    <div class="carousel-container" #carousel [ngClass]="isLoaded ? 'visible' : ''">
       <ng-container *ngFor="let item of carouselItems; index as i;">
         <app-carousel-item [item]="item"></app-carousel-item>
       </ng-container>
