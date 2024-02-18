@@ -23,7 +23,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   carouselItems: CarouselItem[] = [];
 
-  itemWidth = 428;
+  itemWidth = 390;
 
   currentIndex = 1;
 
